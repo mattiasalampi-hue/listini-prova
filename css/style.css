@@ -114,8 +114,40 @@ body {
   max-width: 860px;
   margin: 0 auto;
   padding: 40px 46px 0;
+  overflow: hidden;
   background: var(--foglio);
-  box-shadow: 0 2px 18px rgba(20, 44, 84, 0.12);
+  box-shadow: 0 1px 3px rgba(20, 44, 84, 0.08), 0 12px 40px rgba(20, 44, 84, 0.14);
+}
+
+/* La riga navy-corallo in cima chiude il foglio a specchio con quella in fondo: il
+   documento smette di essere una pagina che comincia e diventa un oggetto stampato. */
+.foglio::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, var(--navy) 0%, var(--navy) 72%, var(--corallo) 72%, var(--corallo) 100%);
+  content: "";
+}
+
+/* L'onda in filigrana dietro la testata. Sta sotto a tutto, tenuissima: si nota
+   solo se la cerchi, ed e' esattamente il lavoro che deve fare. */
+.filigrana {
+  position: absolute;
+  top: -70px;
+  right: -90px;
+  z-index: 0;
+  width: 420px;
+  height: auto;
+  color: var(--navy);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.foglio > *:not(.filigrana) {
+  position: relative;
+  z-index: 1;
 }
 
 /* --- testata --- */
@@ -150,13 +182,26 @@ body {
    titolo faceva tutti e due i lavori e non ne faceva bene nessuno: "Listino del giorno"
    non distingueva il pescato locale dalle occasioni. In corallo, come vuole il design
    system per gli occhielli. */
+/* L'occhiello con la lineetta corallo davanti: un segno piccolo che aggancia il titolo
+   alla riga in cima e alla spunta delle sezioni. Ripetere lo stesso gesto in tre punti
+   e' quello che fa sembrare un foglio disegnato invece che composto. */
 .occhiello {
-  margin: 38px 0 2px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 38px 0 4px;
   color: var(--corallo);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.occhiello::before {
+  width: 26px;
+  height: 2px;
+  background: var(--corallo);
+  content: "";
 }
 
 /* Il titolo e' l'unica cosa che non e' blu: riprende il grigio del logo. Non e' maiuscolo,
@@ -176,9 +221,41 @@ body {
   display: flex;
   gap: 9px;
   align-items: center;
-  margin: 14px 0 26px;
+  width: fit-content;
+  margin: 16px 0 8px;
+  padding: 7px 14px 7px 12px;
+  border-radius: 3px;
+  background: var(--azure-soft);
   color: var(--navy-tenue);
   font-size: 13px;
+}
+
+/* Le tessere del riepilogo: quante voci per reparto, prima ancora di scorrere.
+   E' la sola cosa che il foglio dice PRIMA dei prezzi, ed e' la domanda vera di chi
+   apre un listino — "che cosa c'e' oggi". */
+.riepilogo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.riepilogo li {
+  padding: 5px 11px;
+  border: 1px solid #dbe3ee;
+  border-radius: 999px;
+  color: var(--navy);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.riepilogo b {
+  margin-left: 5px;
+  color: var(--corallo);
+  font-variant-numeric: tabular-nums;
 }
 
 .aggiornamento strong {
@@ -315,11 +392,22 @@ thead th {
 }
 
 tbody td {
-  padding: 6px 8px;
+  padding: 8px;
 }
 
 tbody tr.pari td {
   background: var(--azure-soft);
+}
+
+/* Il rilievo al passaggio del mouse: il foglio nasce per essere stampato, ma nove volte
+   su dieci si legge a schermo, e seguire una riga fino al prezzo su 140 voci senza un
+   aggancio e' faticoso. La lineetta corallo a sinistra e' lo stesso segno dell'occhiello. */
+tbody tr:not(.sezione):hover td {
+  background: #fdf3f1;
+}
+
+tbody tr:not(.sezione):hover .cella-codice {
+  box-shadow: inset 3px 0 0 var(--corallo);
 }
 
 .cella-nome {
@@ -340,7 +428,8 @@ tbody tr.pari td {
 .cella-prezzo {
   padding-right: 12px;
   color: var(--navy);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -348,38 +437,47 @@ tbody tr.pari td {
 /* --- intestazione di sezione --- */
 
 .sezione td {
-  padding: 18px 8px 7px;
-  border-bottom: 1.5px solid var(--corallo);
+  padding: 26px 8px 8px;
+  border-bottom: 2px solid var(--navy);
   background: transparent;
 }
 
 .sezione-titolo {
   display: flex;
-  gap: 11px;
+  gap: 12px;
   align-items: center;
   color: var(--navy);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
+/* L'icona dentro un cerchio: la stessa idea del bollo del modello, ridotta a un segno.
+   Da' alle sezioni un peso che una riga di testo da sola non ha. */
 .sezione-icona {
-  width: 26px;
-  height: 20px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
+  padding: 8px;
+  border: 1.5px solid var(--navy);
+  border-radius: 50%;
   color: var(--navy);
 }
 
 .sezione-spunta {
   width: 3px;
-  height: 15px;
+  height: 17px;
   flex-shrink: 0;
   background: var(--corallo);
 }
 
+/* Il numero grande e corallo: si conta a colpo d'occhio quante sezioni ha il listino. */
 .sezione-numero {
-  margin-right: -4px;
+  color: var(--corallo);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 /* --- piede --- */
@@ -679,15 +777,43 @@ tbody tr.pari td {
     line-height: 1.2;
   }
 
+  /* Sulla fascia piena il cerchio attorno all'icona non serve: il contrasto lo fa gia'
+     il fondo navy, e un bordo bianco dentro una banda bianca sarebbe un doppio giro. */
   .sezione-icona {
-    width: 22px;
-    height: 17px;
+    width: 24px;
+    height: 19px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
     color: #ffffff;
   }
 
   .sezione-spunta {
     height: 13px;
     background: var(--corallo);
+  }
+
+  /* Il numero resta bianco: il corallo sul navy non si legge. */
+  .sezione-numero {
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .aggiornamento {
+    width: auto;
+    padding: 6px 10px;
+  }
+
+  .riepilogo {
+    margin-bottom: 18px;
+  }
+
+  .riepilogo li {
+    font-size: 10px;
+  }
+
+  .filigrana {
+    display: none;
   }
 
   .piede {
