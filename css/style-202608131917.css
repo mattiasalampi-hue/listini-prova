@@ -163,7 +163,7 @@ body {
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(to right, var(--navy) 0%, var(--navy) 72%, var(--accento) 72%, var(--accento) 100%);
+  background: linear-gradient(to right, var(--navy) 0%, var(--navy) 55%, var(--accento) 55%, var(--accento) 100%);
   content: "";
 }
 
@@ -261,7 +261,7 @@ body {
   margin: 16px 0 8px;
   padding: 7px 14px 7px 12px;
   border-radius: 3px;
-  background: var(--azure-soft);
+  background: var(--accento-velo);
   color: var(--navy-tenue);
   font-size: 13px;
 }
@@ -280,7 +280,7 @@ body {
 
 .riepilogo li {
   padding: 5px 11px;
-  border: 1px solid #dbe3ee;
+  border: 1px solid var(--accento);
   border-radius: 999px;
   color: var(--navy);
   font-size: 11px;
@@ -488,46 +488,55 @@ tbody tr:not(.sezione):hover .cella-codice {
 
 /* --- intestazione di sezione --- */
 
+/* LE SEZIONI SONO FASCE PIENE NEL COLORE DEL LISTINO, anche da schermo grande.
+   Prima l'accento toccava solo dettagli da pochi pixel e i cinque fogli restavano
+   indistinguibili a colpo d'occhio: il colore deve occupare superficie per farsi vedere.
+   Sono l'elemento che si ripete cinque o sei volte per pagina, quindi sono anche il
+   posto giusto per farlo. */
 .sezione td {
-  padding: 26px 8px 8px;
-  border-bottom: 2px solid var(--navy);
-  background: transparent;
+  padding: 11px 14px;
+  border-bottom: 0;
+  border-radius: 3px;
+  background: var(--accento);
+}
+
+.sezione {
+  /* Lo stacco sopra la fascia: una riga di tabella non prende margini, quindi lo
+     spazio lo fa una cella trasparente sopra. */
+  border-top: 18px solid transparent;
 }
 
 .sezione-titolo {
   display: flex;
   gap: 12px;
   align-items: center;
-  color: var(--navy);
-  font-size: 16px;
+  color: #ffffff;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 /* L'icona dentro un cerchio: la stessa idea del bollo del modello, ridotta a un segno.
    Da' alle sezioni un peso che una riga di testo da sola non ha. */
 .sezione-icona {
-  width: 38px;
-  height: 38px;
+  width: 26px;
+  height: 20px;
   flex-shrink: 0;
-  padding: 8px;
-  border: 1.5px solid var(--navy);
-  border-radius: 50%;
-  color: var(--navy);
+  color: #ffffff;
 }
 
 .sezione-spunta {
   width: 3px;
-  height: 17px;
+  height: 15px;
   flex-shrink: 0;
-  background: var(--accento);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 /* Il numero grande e corallo: si conta a colpo d'occhio quante sezioni ha il listino. */
 .sezione-numero {
-  color: var(--accento);
-  font-size: 20px;
+  color: #ffffff;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: 0;
 }
