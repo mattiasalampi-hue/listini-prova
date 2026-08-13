@@ -1,0 +1,509 @@
+/* Listino del giorno Del Mar — colonna unica, foglio A4.
+   Ricalca il modello approvato da Mattias (13/08/2026): testata col claim a destra, titolo
+   grande, sezioni numerate, piede a tre blocchi.
+   Revisione del 13/08: TUTTE le scritte nel blu del logo (prima il titolo era grigio) e le
+   righe di separazione in corallo — il colore caldo passa da accento puntuale a struttura
+   del foglio, ed e' quello che tiene insieme la pagina quando il testo e' tutto di un colore.
+   Le stesse regole finiranno in app/views/pdf/pdf.css. */
+
+/* I colori sono quelli del brand (docs/design_system.md), non scelti a occhio:
+   navy #26327e e' il pesce del logo, corallo #e05a48 e' il secondo colore deciso il
+   09/08/2026. Il grigio del titolo e' sparito: Mattias lo vuole nel blu del logo. */
+
+:root {
+  --navy: #26327e;
+  --navy-scuro: #1d2661;
+  --navy-tenue: #6a72a5;
+  --corallo: #e05a48;
+  --corallo-scuro: #b0402f;
+  --corallo-soft: #fdece8;
+  /* Il grigio della scritta "DelMar" del logo: il titolo lo riprende, cosi' la testata e
+     il titolo sono la stessa voce e il blu resta a tutto il resto. */
+  --grigio-logo: #7d8689;
+  --azure-soft: #e9f5fc;
+  --foglio: #ffffff;
+  --fondo: #e9edf2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 16px 60px;
+  background: var(--fondo);
+  color: var(--navy);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* --- selettore del settore: non fa parte del documento, serve solo a confrontare i
+       quattro listini senza aprire quattro file --- */
+
+.scelta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 860px;
+  margin: 0 auto 20px;
+}
+
+.scelta-nota {
+  width: 100%;
+  margin: 0 0 4px;
+  color: var(--navy-tenue);
+  font-size: 12px;
+  text-align: center;
+}
+
+.scelta button {
+  padding: 8px 18px;
+  border: 1px solid var(--navy);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--navy);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.scelta button:hover {
+  background: #dde4ee;
+}
+
+.scelta button[aria-selected="true"] {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+.scelta button:focus-visible,
+.scelta a:focus-visible {
+  outline: 2px solid var(--navy-scuro);
+  outline-offset: 2px;
+}
+
+/* Nei file separati la barra e' fatta di link veri fra i cinque listini, non di bottoni:
+   stessa forma, cosi' non si nota il cambio di meccanismo. */
+
+.scelta a,
+.scelta [aria-current] {
+  padding: 8px 18px;
+  border: 1px solid var(--navy);
+  border-radius: 999px;
+  color: var(--navy);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.scelta a:hover {
+  background: #dde4ee;
+}
+
+.scelta [aria-current] {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+/* --- il foglio --- */
+
+.foglio {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 46px 0;
+  background: var(--foglio);
+  box-shadow: 0 2px 18px rgba(20, 44, 84, 0.12);
+}
+
+/* --- testata --- */
+
+.testata {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.testata-logo {
+  width: 200px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.claim {
+  margin: 0;
+  padding-left: 26px;
+  border-left: 2px solid var(--corallo);
+  color: var(--navy);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+
+/* --- titolo --- */
+
+/* L'occhiello dice CHE COSA e' il documento, il titolo dice DI CHE COSA parla. Prima il
+   titolo faceva tutti e due i lavori e non ne faceva bene nessuno: "Listino del giorno"
+   non distingueva il pescato locale dalle occasioni. In corallo, come vuole il design
+   system per gli occhielli. */
+.occhiello {
+  margin: 38px 0 2px;
+  color: var(--corallo);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Il titolo e' l'unica cosa che non e' blu: riprende il grigio del logo. Non e' maiuscolo,
+   e ha le lettere piu' strette del normale — a 52px la spaziatura di default sgrana la
+   parola. */
+.titolo {
+  margin: 0;
+  color: var(--grigio-logo);
+  font-family: "Century Gothic", Futura, "Trebuchet MS", system-ui, sans-serif;
+  font-size: 52px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.aggiornamento {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin: 14px 0 26px;
+  color: var(--navy-tenue);
+  font-size: 13px;
+}
+
+.aggiornamento strong {
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.icona-piccola {
+  width: 17px;
+  height: 17px;
+  color: var(--navy);
+}
+
+/* --- tabella --- */
+
+.tabella-guscio {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead th {
+  padding: 9px 8px;
+  border-top: 2px solid var(--corallo);
+  border-bottom: 2px solid var(--corallo);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.col-prodotto {
+  padding-left: 46px !important;
+  text-align: left;
+}
+
+.col-origine {
+  width: 240px;
+  text-align: left;
+}
+
+.col-um {
+  width: 90px;
+  text-align: center;
+}
+
+.col-prezzo {
+  width: 96px;
+  text-align: right;
+  padding-right: 12px !important;
+}
+
+/* Le due colonne dello sconto esistono solo sul listino B e C: altrove sarebbero due
+   colonne vuote che rubano spazio ai nomi dei prodotti. */
+
+.col-pieno,
+.col-sconto,
+.cella-pieno,
+.cella-sconto {
+  display: none;
+}
+
+.con-sconto .col-pieno,
+.con-sconto .col-sconto,
+.con-sconto .cella-pieno,
+.con-sconto .cella-sconto {
+  display: table-cell;
+}
+
+.col-pieno {
+  width: 88px;
+  text-align: right;
+}
+
+.col-sconto {
+  width: 86px;
+  text-align: center;
+}
+
+/* Il prezzo pieno barrato: e' il termine di paragone, quindi si vede ma non compete col
+   prezzo vero — piu' piccolo, tenue, e con la riga sopra. */
+.cella-pieno {
+  color: var(--navy-tenue);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  text-decoration: line-through;
+}
+
+/* Lo sconto e' l'unica cosa che sul listino B/C si legge prima del nome: pastiglia corallo
+   piena, il colore caldo del brand usato dove serve davvero convincere. */
+.cella-sconto {
+  text-align: center;
+}
+
+.pastiglia {
+  display: inline-block;
+  min-width: 52px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--corallo);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.pastiglia-vuota {
+  color: var(--navy-tenue);
+  font-size: 12px;
+}
+
+tbody td {
+  padding: 6px 8px;
+}
+
+tbody tr.pari td {
+  background: var(--azure-soft);
+}
+
+.cella-nome {
+  padding-left: 46px;
+  color: var(--navy);
+}
+
+.cella-origine {
+  color: var(--navy-tenue);
+  font-size: 12.5px;
+}
+
+.cella-um {
+  color: var(--navy-tenue);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.cella-prezzo {
+  padding-right: 12px;
+  color: var(--navy);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* --- intestazione di sezione --- */
+
+.sezione td {
+  padding: 18px 8px 7px;
+  border-bottom: 1.5px solid var(--corallo);
+  background: transparent;
+}
+
+.sezione-titolo {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.sezione-icona {
+  width: 26px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--navy);
+}
+
+.sezione-spunta {
+  width: 3px;
+  height: 15px;
+  flex-shrink: 0;
+  background: var(--corallo);
+}
+
+.sezione-numero {
+  margin-right: -4px;
+}
+
+/* --- piede --- */
+
+.piede {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 0;
+  margin-top: 30px;
+  padding: 18px 0 22px;
+  border-top: 2px solid var(--corallo);
+}
+
+.piede-blocco {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 0 22px;
+  border-left: 1px solid var(--corallo);
+}
+
+.piede-blocco:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.piede-icona {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--navy);
+}
+
+.piede-titolo {
+  margin: 0 0 3px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.piede-testo {
+  margin: 0;
+  color: var(--navy-tenue);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.piede-testo a {
+  color: var(--navy-tenue);
+  text-decoration: none;
+}
+
+/* La riga a due colori in fondo al foglio, come sul modello. */
+.barra {
+  display: flex;
+  height: 7px;
+  margin: 0 -46px;
+}
+
+.barra-navy {
+  width: 72%;
+  background: var(--navy);
+}
+
+.barra-corallo {
+  width: 28%;
+  background: var(--corallo);
+}
+
+.nota-anteprima {
+  max-width: 860px;
+  margin: 14px auto 0;
+  color: var(--navy-tenue);
+  font-size: 11px;
+  text-align: center;
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .scelta,
+  .nota-anteprima {
+    display: none;
+  }
+
+  .foglio {
+    max-width: none;
+    box-shadow: none;
+  }
+
+  .sezione {
+    break-after: avoid;
+  }
+
+  tbody tr {
+    break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+}
+
+@media (max-width: 720px) {
+  .foglio {
+    padding: 24px 20px 0;
+  }
+
+  .testata {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .claim {
+    padding-left: 0;
+    border-left: 0;
+    font-size: 18px;
+  }
+
+  .titolo {
+    font-size: 34px;
+  }
+
+  .piede {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .piede-blocco {
+    padding: 0;
+    border-left: 0;
+  }
+
+  .barra {
+    margin: 0 -20px;
+  }
+}
