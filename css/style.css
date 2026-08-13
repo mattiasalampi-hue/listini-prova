@@ -216,8 +216,24 @@ thead th {
   text-transform: uppercase;
 }
 
+/* Il codice articolo apre la riga: e' quello che il cliente scrive nell'ordine, e cercarlo
+   in fondo alla riga vuol dire rileggerla tutta. Tenue e monospaziato, cosi' non compete
+   col nome ma le cifre restano incolonnate. */
+.col-codice {
+  width: 96px;
+  padding-left: 40px !important;
+  text-align: left;
+}
+
+.cella-codice {
+  padding-left: 40px;
+  color: var(--navy-tenue);
+  font-family: "Consolas", "SF Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: -0.02em;
+}
+
 .col-prodotto {
-  padding-left: 46px !important;
   text-align: left;
 }
 
@@ -307,7 +323,6 @@ tbody tr.pari td {
 }
 
 .cella-nome {
-  padding-left: 46px;
   color: var(--navy);
 }
 
