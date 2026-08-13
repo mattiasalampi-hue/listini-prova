@@ -279,13 +279,47 @@ body {
 }
 
 .riepilogo li {
+  border-radius: 999px;
+}
+
+/* La tessera E' il collegamento, non ne contiene uno: cosi' l'area cliccabile e' tutta la
+   pastiglia e non le sole parole. Su un listino da 140 voci il riepilogo diceva quanti
+   crostacei c'erano e poi toccava cercarli scorrendo. */
+.riepilogo a {
+  display: inline-block;
   padding: 5px 11px;
   border: 1px solid var(--accento);
   border-radius: 999px;
   color: var(--navy);
   font-size: 11px;
   letter-spacing: 0.04em;
+  text-decoration: none;
   text-transform: uppercase;
+}
+
+.riepilogo a:hover {
+  background: var(--accento-velo);
+}
+
+.riepilogo a:focus-visible {
+  outline: 2px solid var(--accento);
+  outline-offset: 2px;
+}
+
+/* Lo stacco sopra la sezione quando ci si arriva da un'ancora: senza, la fascia finisce
+   appiccicata al bordo dello schermo e non si capisce di essere atterrati su un titolo. */
+.sezione {
+  scroll-margin-top: 18px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 .riepilogo b {
