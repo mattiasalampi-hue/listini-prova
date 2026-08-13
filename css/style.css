@@ -552,88 +552,142 @@ tbody tr.pari td {
   }
 
   table,
-  tbody {
+  tbody,
+  tbody tr,
+  tbody td {
     display: block;
-    width: 100%;
+    width: auto;
+  }
+
+  /* NIENTE RIGHE ALTERNATE sul telefono. Lo sfondo stava sulle CELLE, e con le celle
+     diventate blocchi di larghezze diverse usciva a macchie sfalsate invece che a righe.
+     Al posto delle strisce, aria e un filo sottile: si legge meglio e sembra piu' curato. */
+  tbody tr.pari td,
+  tbody tr td {
+    background: transparent;
   }
 
   tbody tr {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: baseline;
-    padding: 9px 6px;
-    border-bottom: 1px solid var(--azure-soft);
+    padding: 13px 2px;
+    border-bottom: 1px solid #e6ecf4;
   }
 
   tbody td {
     padding: 0;
   }
 
+  /* Il codice sopra il nome, minuscolo: chi ordina lo cerca, chi legge lo salta. */
+  .cella-codice {
+    grid-column: 1;
+    padding-left: 0;
+    font-size: 10.5px;
+    letter-spacing: 0;
+    opacity: 0.75;
+  }
+
   .cella-nome {
-    flex: 1 1 100%;
-    margin-bottom: 3px;
-    font-size: 14px;
+    grid-column: 1;
+    margin: 1px 0 3px;
+    font-size: 14.5px;
     font-weight: 600;
     line-height: 1.25;
   }
 
-  .cella-codice,
   .cella-origine,
   .cella-um {
+    grid-column: 1;
+    display: inline;
     font-size: 11px;
   }
 
-  /* I puntini fra le voci di servizio: separano senza aggiungere righe. */
-  .cella-origine::before,
+  .cella-origine.vuota {
+    display: none;
+  }
+
   .cella-um::before {
     margin: 0 5px;
-    color: var(--navy-tenue);
     content: "·";
   }
 
-  .cella-codice {
-    padding-left: 0;
+  /* L'unita' non ha il puntino davanti se l'origine non c'e': senza questa regola
+     la riga cominciava con un separatore appeso al nulla. */
+  .cella-origine.vuota + .cella-um::before {
+    content: none;
   }
 
-  /* Il prezzo si stacca dal resto e va a destra: e' l'unica cosa che si legge
-     davvero scorrendo, e prima finiva tagliata fuori dallo schermo. */
+  /* LA COLONNA DEL PREZZO. E' il motivo per cui si apre un listino: sta a destra,
+     grande, su una colonna sua, e non si spezza mai. */
+  .cella-pieno {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    font-size: 12px;
+    text-align: right;
+  }
+
   .cella-prezzo {
+    grid-column: 2;
+    grid-row: 2;
     padding-right: 0;
-    margin-left: auto;
-    font-size: 17px;
+    font-size: 21px;
     font-weight: 700;
+    line-height: 1.1;
+    text-align: right;
     white-space: nowrap;
   }
 
-  .con-sconto .cella-pieno {
-    margin-left: auto;
-    font-size: 12px;
-  }
-
-  .con-sconto .cella-prezzo {
-    margin-left: 8px;
-  }
-
   .cella-sconto {
-    flex: 1 1 100%;
+    grid-column: 2;
+    grid-row: 3;
     margin-top: 5px;
-    text-align: left;
+    text-align: right;
   }
 
-  /* Le sezioni restano bande piene, non righe di tabella: sul telefono servono
-     a farsi ritrovare mentre si scorre. */
+  /* Il trattino dello "sconto assente" spariva male: su desktop e' una colonna da
+     riempire, sul telefono e' una riga vuota in piu' sotto ogni prezzo. */
+  .cella-sconto.pastiglia-vuota {
+    display: none;
+  }
+
+  .pastiglia {
+    min-width: 0;
+    padding: 3px 9px;
+    font-size: 12.5px;
+  }
+
+  /* LE SEZIONI DIVENTANO FASCE PIENE. Su un foglio A4 bastava una riga con un filetto;
+     scorrendo col pollice serve un blocco che si riconosca senza leggerlo. */
+  .sezione {
+    border-bottom: 0;
+  }
+
   .sezione td {
-    padding: 16px 6px 6px;
+    margin: 22px 0 2px;
+    padding: 11px 12px;
+    border-bottom: 0;
+    border-radius: 4px;
+    background: var(--navy);
   }
 
   .sezione-titolo {
+    color: #ffffff;
     font-size: 13px;
+    letter-spacing: 0.06em;
     line-height: 1.2;
   }
 
   .sezione-icona {
     width: 22px;
     height: 17px;
+    color: #ffffff;
+  }
+
+  .sezione-spunta {
+    height: 13px;
+    background: var(--corallo);
   }
 
   .piede {
