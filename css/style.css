@@ -23,6 +23,42 @@
   --azure-soft: #e9f5fc;
   --foglio: #ffffff;
   --fondo: #e9edf2;
+
+  /* L'ACCENTO E' L'UNICA COSA CHE CAMBIA DA UN LISTINO ALL'ALTRO. Navy, grigio del logo,
+     impaginato e tipografia restano identici: e' quello che tiene insieme la famiglia.
+     Il corallo del brand resta il valore di partenza, gli altri temi lo sostituiscono. */
+  --accento: var(--corallo);
+  --accento-scuro: var(--corallo-scuro);
+  --accento-velo: #fdf3f1;
+}
+
+/* Il PAT delle pescherie e quello dei ristoranti sono lo STESSO pescato a prezzi diversi:
+   due file quasi identici che e' facilissimo scambiare mandandoli. Il colore diverso non
+   e' decorazione, e' la sicurezza che a un ristorante non arrivi il prezzo delle pescherie. */
+.tema-acqua {
+  --accento: #17879b;
+  --accento-scuro: #10606f;
+  --accento-velo: #eff8fa;
+}
+
+.tema-mare {
+  --accento: #2f7fc1;
+  --accento-scuro: #205a8b;
+  --accento-velo: #f0f6fc;
+}
+
+.tema-ambra {
+  --accento: #c98a2e;
+  --accento-scuro: #8f6113;
+  --accento-velo: #fdf7ec;
+}
+
+/* Le occasioni chiedono di essere lette adesso: il rosso e' piu' urgente del corallo,
+   ed e' il solo listino dove serve davvero. */
+.tema-rosso {
+  --accento: #c0392b;
+  --accento-scuro: #8d2418;
+  --accento-velo: #fdf1ef;
 }
 
 * {
@@ -127,7 +163,7 @@ body {
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(to right, var(--navy) 0%, var(--navy) 72%, var(--corallo) 72%, var(--corallo) 100%);
+  background: linear-gradient(to right, var(--navy) 0%, var(--navy) 72%, var(--accento) 72%, var(--accento) 100%);
   content: "";
 }
 
@@ -168,7 +204,7 @@ body {
 .claim {
   margin: 0;
   padding-left: 26px;
-  border-left: 2px solid var(--corallo);
+  border-left: 2px solid var(--accento);
   color: var(--navy);
   font-size: 22px;
   font-weight: 400;
@@ -190,7 +226,7 @@ body {
   gap: 10px;
   align-items: center;
   margin: 38px 0 4px;
-  color: var(--corallo);
+  color: var(--accento);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -200,7 +236,7 @@ body {
 .occhiello::before {
   width: 26px;
   height: 2px;
-  background: var(--corallo);
+  background: var(--accento);
   content: "";
 }
 
@@ -254,7 +290,7 @@ body {
 
 .riepilogo b {
   margin-left: 5px;
-  color: var(--corallo);
+  color: var(--accento);
   font-variant-numeric: tabular-nums;
 }
 
@@ -284,8 +320,8 @@ table {
 
 thead th {
   padding: 9px 8px;
-  border-top: 2px solid var(--corallo);
-  border-bottom: 2px solid var(--corallo);
+  border-top: 2px solid var(--accento);
+  border-bottom: 2px solid var(--accento);
   color: var(--navy);
   font-size: 11px;
   font-weight: 700;
@@ -378,7 +414,7 @@ thead th {
   min-width: 52px;
   padding: 2px 8px;
   border-radius: 3px;
-  background: var(--corallo);
+  background: var(--accento);
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;
@@ -403,11 +439,11 @@ tbody tr.pari td {
    su dieci si legge a schermo, e seguire una riga fino al prezzo su 140 voci senza un
    aggancio e' faticoso. La lineetta corallo a sinistra e' lo stesso segno dell'occhiello. */
 tbody tr:not(.sezione):hover td {
-  background: #fdf3f1;
+  background: var(--accento-velo);
 }
 
 tbody tr:not(.sezione):hover .cella-codice {
-  box-shadow: inset 3px 0 0 var(--corallo);
+  box-shadow: inset 3px 0 0 var(--accento);
 }
 
 .cella-nome {
@@ -420,9 +456,9 @@ tbody tr:not(.sezione):hover .cella-codice {
 .minimo {
   margin-left: 9px;
   padding: 2px 7px;
-  border: 1px solid var(--corallo);
+  border: 1px solid var(--accento);
   border-radius: 3px;
-  color: var(--corallo-scuro);
+  color: var(--accento-scuro);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -485,12 +521,12 @@ tbody tr:not(.sezione):hover .cella-codice {
   width: 3px;
   height: 17px;
   flex-shrink: 0;
-  background: var(--corallo);
+  background: var(--accento);
 }
 
 /* Il numero grande e corallo: si conta a colpo d'occhio quante sezioni ha il listino. */
 .sezione-numero {
-  color: var(--corallo);
+  color: var(--accento);
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0;
@@ -504,7 +540,7 @@ tbody tr:not(.sezione):hover .cella-codice {
   gap: 0;
   margin-top: 30px;
   padding: 18px 0 22px;
-  border-top: 2px solid var(--corallo);
+  border-top: 2px solid var(--accento);
 }
 
 .piede-blocco {
@@ -512,7 +548,7 @@ tbody tr:not(.sezione):hover .cella-codice {
   gap: 14px;
   align-items: center;
   padding: 0 22px;
-  border-left: 1px solid var(--corallo);
+  border-left: 1px solid var(--accento);
 }
 
 .piede-blocco:first-child {
@@ -562,7 +598,7 @@ tbody tr:not(.sezione):hover .cella-codice {
 
 .barra-corallo {
   width: 28%;
-  background: var(--corallo);
+  background: var(--accento);
 }
 
 .nota-anteprima {
@@ -806,7 +842,7 @@ tbody tr:not(.sezione):hover .cella-codice {
 
   .sezione-spunta {
     height: 13px;
-    background: var(--corallo);
+    background: var(--accento);
   }
 
   /* Il numero resta bianco: il corallo sul navy non si legge. */
