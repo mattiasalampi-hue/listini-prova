@@ -1,2 +1,5 @@
+# I listini restano fuori dai motori di ricerca col meta "noindex" dentro ogni pagina.
+# Qui NON si blocca nulla: un Disallow impedisce al crawler di SCARICARE la pagina, e
+# senza scaricarla WhatsApp non puo' costruire l'anteprima del link.
 User-agent: *
-Disallow: /
+Allow: /
