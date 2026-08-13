@@ -488,29 +488,158 @@ tbody tr.pari td {
   }
 }
 
+/* =========================================================================
+   TELEFONO. La tabella a quattro colonne non si stringe: a 390px il prezzo
+   finiva fuori schermo e "€/kg" andava a capo in mezzo. Qui la tabella smette
+   di essere una tabella e ogni prodotto diventa un blocco: nome sopra, e sotto
+   una riga di servizio col codice, l'origine e l'unita', col PREZZO grande a
+   destra — che e' la cosa che si cerca quando si scorre un listino col pollice.
+   ========================================================================= */
+
 @media (max-width: 720px) {
-  .foglio {
-    padding: 24px 20px 0;
+  body {
+    padding: 0 0 32px;
   }
 
+  .foglio {
+    padding: 22px 18px 0;
+    box-shadow: none;
+  }
+
+  /* La testata occupava mezzo schermo prima di far vedere un prezzo. */
   .testata {
-    flex-direction: column;
+    gap: 14px;
     align-items: flex-start;
   }
 
+  .testata-logo {
+    width: 132px;
+  }
+
   .claim {
-    padding-left: 0;
-    border-left: 0;
-    font-size: 18px;
+    padding-left: 14px;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .occhiello {
+    margin-top: 22px;
+    font-size: 10px;
+    letter-spacing: 0.13em;
   }
 
   .titolo {
-    font-size: 34px;
+    font-size: 30px;
+  }
+
+  .aggiornamento {
+    flex-wrap: wrap;
+    margin: 10px 0 18px;
+    font-size: 12px;
+  }
+
+  .aggiornamento strong {
+    font-size: 12px;
+  }
+
+  /* Via l'intestazione di colonna: senza colonne non ha piu' niente da intestare. */
+  thead {
+    display: none;
+  }
+
+  .tabella-guscio {
+    overflow-x: visible;
+  }
+
+  table,
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding: 9px 6px;
+    border-bottom: 1px solid var(--azure-soft);
+  }
+
+  tbody td {
+    padding: 0;
+  }
+
+  .cella-nome {
+    flex: 1 1 100%;
+    margin-bottom: 3px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .cella-codice,
+  .cella-origine,
+  .cella-um {
+    font-size: 11px;
+  }
+
+  /* I puntini fra le voci di servizio: separano senza aggiungere righe. */
+  .cella-origine::before,
+  .cella-um::before {
+    margin: 0 5px;
+    color: var(--navy-tenue);
+    content: "·";
+  }
+
+  .cella-codice {
+    padding-left: 0;
+  }
+
+  /* Il prezzo si stacca dal resto e va a destra: e' l'unica cosa che si legge
+     davvero scorrendo, e prima finiva tagliata fuori dallo schermo. */
+  .cella-prezzo {
+    padding-right: 0;
+    margin-left: auto;
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .con-sconto .cella-pieno {
+    margin-left: auto;
+    font-size: 12px;
+  }
+
+  .con-sconto .cella-prezzo {
+    margin-left: 8px;
+  }
+
+  .cella-sconto {
+    flex: 1 1 100%;
+    margin-top: 5px;
+    text-align: left;
+  }
+
+  /* Le sezioni restano bande piene, non righe di tabella: sul telefono servono
+     a farsi ritrovare mentre si scorre. */
+  .sezione td {
+    padding: 16px 6px 6px;
+  }
+
+  .sezione-titolo {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .sezione-icona {
+    width: 22px;
+    height: 17px;
   }
 
   .piede {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 16px;
+    margin-top: 22px;
   }
 
   .piede-blocco {
@@ -518,7 +647,16 @@ tbody tr.pari td {
     border-left: 0;
   }
 
+  .piede-icona {
+    width: 32px;
+    height: 32px;
+  }
+
   .barra {
-    margin: 0 -20px;
+    margin: 0 -18px;
+  }
+
+  .nota-anteprima {
+    padding: 0 18px;
   }
 }
